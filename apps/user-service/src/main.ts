@@ -11,9 +11,13 @@ async function bootstrap() {
       client: {
         brokers: ['localhost:29092'],
       },
+      consumer: {
+        groupId: 'user-consumer',
+      },
     },
   });
 
+  await app.startAllMicroservices();
   await app.listen(3000);
 }
 bootstrap();

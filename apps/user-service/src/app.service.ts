@@ -19,7 +19,10 @@ export class AppService {
       ...user,
     };
     await this.userRepository.insert(newUser);
-    this.clientKafka.emit('user_topic', JSON.stringify(newUser));
+    this.clientKafka.emit('user_topic', {
+      key: newUser.id,
+      value: JSON.stringify(newUser),
+    });
     return newUser;
   }
 

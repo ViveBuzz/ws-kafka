@@ -7,8 +7,8 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  getSubmission(): any {
+    return this.appService.getEnrichedSubmissions();
   }
 
   @Post()
@@ -17,8 +17,8 @@ export class AppController {
   }
 
   @EventPattern('enriched_submission_topic')
-  handleProcessPayment(@Payload() data: any) {
+  async handleProcessPayment(@Payload() data: any) {
     console.log('Save enriched submission...');
-    this.appService.processEnrichedSubmission(data);
+    await this.appService.processEnrichedSubmission(data);
   }
 }

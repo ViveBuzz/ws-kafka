@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { Submission } from '@ws/domains';
+import { EnrichedSubmission, Submission } from '@ws/domains';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -7,7 +7,7 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Submission]),
+    TypeOrmModule.forFeature([Submission, EnrichedSubmission]),
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: '127.0.0.1',

@@ -1,7 +1,7 @@
 import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
 import { ClientKafka } from '@nestjs/microservices';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Submission } from '@ws/domains';
+import { EnrichedSubmission, Submission } from '@ws/domains';
 import { nanoid } from 'nanoid';
 import { Repository } from 'typeorm';
 
@@ -10,6 +10,8 @@ export class AppService implements OnModuleInit {
   constructor(
     @InjectRepository(Submission)
     private readonly submissionRepository: Repository<Submission>,
+    @InjectRepository(EnrichedSubmission)
+    private readonly enrichedSubmissionRepository: Repository<EnrichedSubmission>,
     @Inject('content_service') private readonly clientKafka: ClientKafka,
   ) {}
   getHello(): string {
@@ -28,8 +30,17 @@ export class AppService implements OnModuleInit {
     return newSubmission;
   }
 
-  processEnrichedSubmission(submission: any) {
-    console.log(submission);
+  async processEnrichedSubmission(submission: any) {
+    await this.enrichedSubmissionRepository.insert({
+      ...submission,
+      user: submission.user || {},
+      membership: submission.membership || {},
+    });
+  }
+
+  async getEnrichedSubmissions(): Promise<any> {
+    const data = await this.enrichedSubmissionRepository.find();
+    return { data };
   }
 
   onModuleInit() {
