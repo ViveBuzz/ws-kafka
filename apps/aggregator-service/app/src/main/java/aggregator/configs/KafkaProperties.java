@@ -39,6 +39,10 @@ public class KafkaProperties {
         return properties.getProperty("kafka.topic.user", "user_topic");
     }
 
+    public String getUserUpdatedTopic() {
+        return properties.getProperty("kafka.topic.user.updated", "user_updated_topic");
+    }
+
     public String getMembershipTopic() {
         return properties.getProperty("kafka.topic.membership", "membership_topic");
     }

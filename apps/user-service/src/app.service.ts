@@ -13,17 +13,24 @@ export class AppService {
     @Inject('user_service') private readonly clientKafka: ClientKafka,
   ) {}
 
-  async createUser(user: User): Promise<User> {
-    const newUser = {
-      id: nanoid(),
-      ...user,
+  async createUser(input: User): Promise<User> {
+    const user = {
+      id: input.id || nanoid(),
+      ...input,
     };
-    await this.userRepository.insert(newUser);
+    await this.userRepository.save(user);
     this.clientKafka.emit('user_topic', {
-      key: newUser.id,
-      value: JSON.stringify(newUser),
+      key: user.id,
+      value: JSON.stringify(user),
     });
-    return newUser;
+
+    if (input.id) {
+      this.clientKafka.emit('user_updated_topic', {
+        key: user.id,
+        value: JSON.stringify(user),
+      });
+    }
+    return user;
   }
 
   async getUsers(): Promise<User[]> {

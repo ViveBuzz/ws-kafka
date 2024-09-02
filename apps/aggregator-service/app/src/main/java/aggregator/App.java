@@ -23,6 +23,8 @@ public class App {
         submissionProcessor.buildSubmissionStream(builder);
 
         KafkaStreams streams = new KafkaStreams(builder.build(), props);
+        submissionProcessor.setStreams(streams);
+
         streams.setUncaughtExceptionHandler(ex -> {
             System.out.println(ex);
             return StreamsUncaughtExceptionHandler.StreamThreadExceptionResponse.SHUTDOWN_APPLICATION;

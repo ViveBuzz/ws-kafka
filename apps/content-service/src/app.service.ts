@@ -31,7 +31,7 @@ export class AppService implements OnModuleInit {
   }
 
   async processEnrichedSubmission(submission: any) {
-    await this.enrichedSubmissionRepository.insert({
+    await this.enrichedSubmissionRepository.save({
       ...submission,
       user: submission.user || {},
       membership: submission.membership || {},
@@ -39,7 +39,10 @@ export class AppService implements OnModuleInit {
   }
 
   async getEnrichedSubmissions(): Promise<any> {
-    const data = await this.enrichedSubmissionRepository.find();
+    const data = await this.enrichedSubmissionRepository.find({
+      order: { date: 'DESC' },
+      take: 10,
+    });
     return { data };
   }
 

@@ -6,13 +6,15 @@ public class EnrichedSubmission extends Submission {
   public EnrichedSubmission() {
   }
 
-  public EnrichedSubmission(Submission submission, User user) {
-    super(submission.getId(), submission.getUserId(), submission.getDate(), submission.getStatus());
-    this.user = user;
-  }
-
   public User getUser() {
     return user;
+  }
+
+  public void setSubmission(Submission submission) {
+    setId(submission.getId());
+    setUserId(submission.getUserId());
+    setDate(submission.getDate());
+    setStatus(submission.getStatus());
   }
 
   public void setUser(User user) {
