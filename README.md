@@ -10,8 +10,11 @@
 ### High level design
 ![HLD](docs/images/HLD.png)
 
-### Enrich submission flow
+#### Enrich submission flow
 ![enrich-flow](docs/images/stream-join-table.png)
+
+#### Update enriched submission when user is updated flow
+![update-flow](docs/images/update-enriched-submission.png)
 
 ### Kafka topics
 
