@@ -10,6 +10,9 @@
 ### High level design
 ![HLD](docs/images/HLD.png)
 
+### Enrich submission flow
+![enrich-flow](docs/images/stream-join-table.png)
+
 ### Kafka topics
 
 | Topic Name                    | Description |
